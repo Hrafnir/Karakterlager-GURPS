@@ -1851,7 +1851,7 @@
     "notes": "+1 per level to Musical Instrument, Singing, and related arts.",
     "source": "GURPS Basic Set: Characters",
     "tags": ["Mental", "Arts"]
-  }
+  },
   {
     "name": "Night Vision",
     "type": "Advantage",
@@ -2089,7 +2089,7 @@
     "notes": "An entity specially prepared for you to possess or mind-control.",
     "source": "GURPS Basic Set: Characters",
     "tags": ["Social", "Exotic"]
-  }
+  },
   {
     "name": "Radiation Tolerance",
     "type": "Advantage",
@@ -2616,7 +2616,7 @@
     "notes": "Cannot be killed by anything except one specific Achilles' heel.",
     "source": "GURPS Basic Set: Characters",
     "tags": ["Physical", "Supernatural"]
-  }
+  },
   {
     "name": "Telecommunication",
     "type": "Advantage",
