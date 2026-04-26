@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>GURPS Character Forge</title>
+
+  <meta
+    name="description"
+    content="En web-app for å lage, beregne, lagre og skrive ut GURPS-karakterer."
+  />
+
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+  <header class="app-header no-print">
+    <div class="app-header__brand">
+      <p class="eyebrow">GURPS Fourth Edition</p>
+      <h1>Character Forge</h1>
+      <p class="subtitle">
+        Bygg karakterer, regn poeng, legg inn utstyr og skriv ut et ryddig karakterark.
+      </p>
+    </div>
+
+    <div class="app-header__actions">
+      <button class="btn btn-secondary" type="button" data-action="new-character">
+        Ny karakter
+      </button>
+
+      <button class="btn btn-secondary" type="button" data-action="save-character">
+        Lagre
+      </button>
+
+      <button class="btn btn-secondary" type="button" data-action="export-character">
+        Eksporter JSON
+      </button>
+
+      <button class="btn btn-secondary" type="button" data-action="import-character">
+        Importer JSON
+      </button>
+
+      <button class="btn btn-primary" type="button" data-action="print-sheet">
+        Print / PDF
+      </button>
+
+      <input
+        id="characterImportInput"
+        class="visually-hidden"
+        type="file"
+        accept="application/json"
+      />
+    </div>
+  </header>
+
+  <nav class="app-tabs no-print" aria-label="Hovednavigasjon">
+    <button class="tab is-active" type="button" data-tab-target="builder">
+      Bygger
+    </button>
+    <button class="tab" type="button" data-tab-target="library">
+      Bibliotek
+    </button>
+    <button class="tab" type="button" data-tab-target="sheet">
+      Karakterark
+    </button>
+  </nav>
+
+  <main class="app-shell">
+    <!-- =========================================================
+      BUILDER
+    ========================================================== -->
+    <section id="tab-builder" class="tab-panel is-active" data-tab-panel="builder">
+      <section class="dashboard">
+        <article class="summary-card">
+          <span class="summary-card__label">Poengbudsjett</span>
+          <strong id="summaryPointBudget">150</strong>
+        </article>
+
+        <article class="summary-card">
+          <span class="summary-card__label">Brukt totalt</span>
+          <strong id="summaryTotalPoints">0</strong>
+        </article>
+
+        <article class="summary-card">
+          <span class="summary-card__label">Gjenstår</span>
+          <strong id="summaryRemainingPoints">150</strong>
+        </article>
+
+        <article class="summary-card">
+          <span class="summary-card__label">Disadvantages</span>
+          <strong id="summaryDisadvantagePoints">0</strong>
+        </article>
+
+        <article class="summary-card">
+          <span class="summary-card__label">Encumbrance</span>
+          <strong id="summaryEncumbrance">None</strong>
+        </article>
+      </section>
+
+      <!-- Character identity -->
+      <section class="card">
+        <div class="card__header">
+          <div>
+            <p class="eyebrow">1</p>
+            <h2>Karaktergrunnlag</h2>
+          </div>
+          <p class="card__hint">
+            Navn, konsept, TL, poengramme, portrett og kampanjeinformasjon.
+          </p>
+        </div>
+
+        <div class="character-basics">
+          <div class="portrait-panel">
+            <div id="portraitPreview" class="portrait-preview">
+              <span>Karakterbilde</span>
+            </div>
+
+            <div class="button-row">
+              <button class="btn btn-secondary" type="button" data-action="upload-portrait">
+                Last opp bilde
+              </button>
+              <button class="btn btn-ghost" type="button" data-action="remove-portrait">
+                Fjern
+              </button>
+            </div>
+
+            <input
+              id="portraitInput"
+              class="visually-hidden"
+              type="file"
+              accept="image/*"
+            />
+          </div>
+
+          <div class="form-grid form-grid-4">
+            <label class="field">
+              <span>Karakter</span>
+              <input id="charName" type="text" autocomplete="off" />
+            </label>
+
+            <label class="field">
+              <span>Spiller</span>
+              <input id="charPlayer" type="text" autocomplete="off" />
+            </label>
+
+            <label class="field">
+              <span>Kampanje</span>
+              <input id="charCampaign" type="text" autocomplete="off" />
+            </label>
+
+            <label class="field">
+              <span>Poengbudsjett</span>
+              <input id="charPointBudget" type="number" value="150" />
+            </label>
+
+            <label class="field field-wide">
+              <span>Konsept</span>
+              <input id="charConcept" type="text" autocomplete="off" />
+            </label>
+
+            <label class="field">
+              <span>Art / rase / opphav</span>
+              <input id="charSpecies" type="text" value="Human" autocomplete="off" />
+            </label>
+
+            <label class="field">
+              <span>Template</span>
+              <input id="charTemplate" type="text" autocomplete="off" />
+            </label>
+
+            <label class="field">
+              <span>Yrke / rolle</span>
+              <input id="charProfession" type="text" autocomplete="off" />
+            </label>
+
+            <label class="field">
+              <span>TL</span>
+              <input id="charTL" type="number" value="3" min="0" max="12" />
+            </label>
+
+            <label class="field">
+              <span>Disadvantage limit</span>
+              <input id="charDisadLimit" type="number" value="-75" />
+            </label>
+
+            <label class="field">
+              <span>SM</span>
+              <input id="charSM" type="number" value="0" />
+            </label>
+
+            <label class="field">
+              <span>Handedness</span>
+              <select id="charHandedness">
+                <option value="Right">Right</option>
+                <option value="Left">Left</option>
+                <option value="Ambidextrous">Ambidextrous</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>Alder</span>
+              <input id="charAge" type="text" autocomplete="off" />
+            </label>
+
+            <label class="field">
+              <span>Høyde</span>
+              <input id="charHeight" type="text" autocomplete="off" />
+            </label>
+
+            <label class="field">
+              <span>Vekt</span>
+              <input id="charWeight" type="text" autocomplete="off" />
+            </label>
+
+            <label class="field">
+              <span>Utseende</span>
+              <input id="charAppearance" type="text" autocomplete="off" />
+            </label>
+
+            <label class="field">
+              <span>Status</span>
+              <input id="charStatus" type="number" value="0" />
+            </label>
+
+            <label class="field">
+              <span>Wealth level</span>
+              <input id="charWealthLevel" type="text" value="Average" autocomplete="off" />
+            </label>
+
+            <label class="field">
+              <span>Starting wealth override</span>
+              <input id="charStartingWealthOverride" type="number" placeholder="Valgfritt" />
+            </label>
+
+            <label class="field">
+              <span>Reputation</span>
+              <input id="charReputation" type="text" autocomplete="off" />
+            </label>
+
+            <label class="field field-wide-2">
+              <span>Kampanjepremiss</span>
+              <textarea id="charCampaignPremise"></textarea>
+            </label>
+
+            <label class="field field-wide-2">
+              <span>House rules / tillatte regler</span>
+              <textarea id="charHouseRules"></textarea>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- Stats -->
+      <section class="card">
+        <div class="card__header">
+          <div>
+            <p class="eyebrow">2</p>
+            <h2>Stats og sekundærverdier</h2>
+          </div>
+          <p class="card__hint">
+            ST, DX, IQ og HT regnes fra 10. Sekundærverdier, Basic Lift, Move,
+            Dodge og damage regnes automatisk.
+          </p>
+        </div>
+
+        <div class="stat-grid">
+          <label class="stat-box">
+            <span>ST</span>
+            <input id="statST" type="number" value="10" />
+            <small id="costST">0 CP</small>
+          </label>
+
+          <label class="stat-box">
+            <span>DX</span>
+            <input id="statDX" type="number" value="10" />
+            <small id="costDX">0 CP</small>
+          </label>
+
+          <label class="stat-box">
+            <span>IQ</span>
+            <input id="statIQ" type="number" value="10" />
+            <small id="costIQ">0 CP</small>
+          </label>
+
+          <label class="stat-box">
+            <span>HT</span>
+            <input id="statHT" type="number" value="10" />
+            <small id="costHT">0 CP</small>
+          </label>
+        </div>
+
+        <div class="form-grid form-grid-4 mt">
+          <label class="field">
+            <span>HP</span>
+            <input id="secHP" type="number" value="10" />
+          </label>
+
+          <label class="field">
+            <span>Current HP</span>
+            <input id="secCurrentHP" type="number" value="10" />
+          </label>
+
+          <label class="field">
+            <span>Will</span>
+            <input id="secWill" type="number" value="10" />
+          </label>
+
+          <label class="field">
+            <span>Per</span>
+            <input id="secPer" type="number" value="10" />
+          </label>
+
+          <label class="field">
+            <span>FP</span>
+            <input id="secFP" type="number" value="10" />
+          </label>
+
+          <label class="field">
+            <span>Current FP</span>
+            <input id="secCurrentFP" type="number" value="10" />
+          </label>
+
+          <label class="field">
+            <span>Basic Speed adj.</span>
+            <input id="secSpeedAdj" type="number" value="0" step="0.25" />
+          </label>
+
+          <label class="field">
+            <span>Basic Move adj.</span>
+            <input id="secMoveAdj" type="number" value="0" />
+          </label>
+
+          <label class="field">
+            <span>Shield DB</span>
+            <input id="secShieldDB" type="number" value="0" />
+          </label>
+
+          <label class="field">
+            <span>Dodge bonus</span>
+            <input id="secDodgeBonus" type="number" value="0" />
+          </label>
+
+          <label class="field">
+            <span>Parry</span>
+            <input id="secParry" type="text" />
+          </label>
+
+          <label class="field">
+            <span>Block</span>
+            <input id="secBlock" type="text" />
+          </label>
+
+          <label class="field">
+            <span>DR total</span>
+            <input id="secDR" type="text" />
+          </label>
+
+          <label class="field">
+            <span>Thr override</span>
+            <input id="secThrOverride" type="text" placeholder="Valgfritt" />
+          </label>
+
+          <label class="field">
+            <span>Sw override</span>
+            <input id="secSwOverride" type="text" placeholder="Valgfritt" />
+          </label>
+        </div>
+
+        <div class="derived-grid mt">
+          <article>
+            <span>Damage</span>
+            <strong id="derivedDamage">1d-2 / 1d</strong>
+          </article>
+          <article>
+            <span>Basic Lift</span>
+            <strong id="derivedBasicLift">20 lb</strong>
+          </article>
+          <article>
+            <span>Basic Speed</span>
+            <strong id="derivedBasicSpeed">5.00</strong>
+          </article>
+          <article>
+            <span>Move / Loaded Move</span>
+            <strong id="derivedMove">5 / 5</strong>
+          </article>
+          <article>
+            <span>Dodge</span>
+            <strong id="derivedDodge">8</strong>
+          </article>
+          <article>
+            <span>Carried weight</span>
+            <strong id="derivedCarriedWeight">0 lb</strong>
+          </article>
+          <article>
+            <span>Starting wealth</span>
+            <strong id="derivedStartingWealth">$1,000</strong>
+          </article>
+        </div>
+      </section>
+
+      <!-- Traits -->
+      <section class="card">
+        <div class="card__header">
+          <div>
+            <p class="eyebrow">3</p>
+            <h2>Advantages, disadvantages, perks og quirks</h2>
+          </div>
+
+          <div class="card-actions">
+            <select id="traitLibrarySelect">
+              <option value="">Legg til fra bibliotek</option>
+            </select>
+
+            <button class="btn btn-primary" type="button" data-action="add-trait">
+              Legg til trait
+            </button>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="editor-table" id="traitsTable">
+            <thead>
+              <tr>
+                <th>Navn</th>
+                <th>Type</th>
+                <th>Levels</th>
+                <th>Base</th>
+                <th>Mod %</th>
+                <th>CP</th>
+                <th>Auto</th>
+                <th>Side</th>
+                <th>Notater</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="traitsBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Skills -->
+      <section class="card">
+        <div class="card__header">
+          <div>
+            <p class="eyebrow">4</p>
+            <h2>Skills</h2>
+          </div>
+
+          <div class="card-actions">
+            <select id="skillLibrarySelect">
+              <option value="">Legg til fra bibliotek</option>
+            </select>
+
+            <button class="btn btn-primary" type="button" data-action="add-skill">
+              Legg til skill
+            </button>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="editor-table" id="skillsTable">
+            <thead>
+              <tr>
+                <th>Skill</th>
+                <th>Specialty/TL</th>
+                <th>Stat</th>
+                <th>Difficulty</th>
+                <th>CP</th>
+                <th>Manual level</th>
+                <th>Level</th>
+                <th>Rel.</th>
+                <th>Default / prereq</th>
+                <th>Side</th>
+                <th>Notater</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="skillsBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Techniques and spells -->
+      <section class="card card-grid-2">
+        <div>
+          <div class="card__header compact">
+            <div>
+              <p class="eyebrow">5A</p>
+              <h2>Techniques</h2>
+            </div>
+            <button class="btn btn-primary" type="button" data-action="add-technique">
+              Legg til
+            </button>
+          </div>
+
+          <div class="table-wrap">
+            <table class="editor-table" id="techniquesTable">
+              <thead>
+                <tr>
+                  <th>Technique</th>
+                  <th>Base skill</th>
+                  <th>CP</th>
+                  <th>Level</th>
+                  <th>Side</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="techniquesBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div>
+          <div class="card__header compact">
+            <div>
+              <p class="eyebrow">5B</p>
+              <h2>Spells / powers</h2>
+            </div>
+            <button class="btn btn-primary" type="button" data-action="add-spell">
+              Legg til
+            </button>
+          </div>
+
+          <div class="table-wrap">
+            <table class="editor-table" id="spellsTable">
+              <thead>
+                <tr>
+                  <th>Spell/power</th>
+                  <th>College/type</th>
+                  <th>Stat</th>
+                  <th>Diff.</th>
+                  <th>CP</th>
+                  <th>Level</th>
+                  <th>Side</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="spellsBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Combat -->
+      <section class="card">
+        <div class="card__header">
+          <div>
+            <p class="eyebrow">6</p>
+            <h2>Weapons / attacks</h2>
+          </div>
+
+          <div class="card-actions">
+            <select id="weaponLibrarySelect">
+              <option value="">Legg til våpen fra bibliotek</option>
+            </select>
+
+            <button class="btn btn-primary" type="button" data-action="add-weapon">
+              Legg til angrep
+            </button>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="editor-table" id="weaponsTable">
+            <thead>
+              <tr>
+                <th>Våpen/angrep</th>
+                <th>Skill</th>
+                <th>Level</th>
+                <th>Damage</th>
+                <th>Type</th>
+                <th>Reach/Rng</th>
+                <th>Parry</th>
+                <th>Acc</th>
+                <th>Bulk</th>
+                <th>ST</th>
+                <th>Notater</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="weaponsBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Armor and equipment -->
+      <section class="card card-grid-2">
+        <div>
+          <div class="card__header compact">
+            <div>
+              <p class="eyebrow">7A</p>
+              <h2>Armor</h2>
+            </div>
+
+            <div class="card-actions">
+              <select id="armorLibrarySelect">
+                <option value="">Fra bibliotek</option>
+              </select>
+
+              <button class="btn btn-primary" type="button" data-action="add-armor">
+                Legg til
+              </button>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table class="editor-table" id="armorTable">
+              <thead>
+                <tr>
+                  <th>Rustning</th>
+                  <th>Lokasjon</th>
+                  <th>DR</th>
+                  <th>Vekt</th>
+                  <th>Kost</th>
+                  <th>Notater</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="armorBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div>
+          <div class="card__header compact">
+            <div>
+              <p class="eyebrow">7B</p>
+              <h2>Gear</h2>
+            </div>
+
+            <div class="card-actions">
+              <select id="gearLibrarySelect">
+                <option value="">Fra bibliotek</option>
+              </select>
+
+              <button class="btn btn-primary" type="button" data-action="add-gear">
+                Legg til
+              </button>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table class="editor-table" id="gearTable">
+              <thead>
+                <tr>
+                  <th>Utstyr</th>
+                  <th>Antall</th>
+                  <th>Vekt</th>
+                  <th>Kost</th>
+                  <th>Lokasjon</th>
+                  <th>LC/TL</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="gearBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Notes -->
+      <section class="card">
+        <div class="card__header">
+          <div>
+            <p class="eyebrow">8</p>
+            <h2>Bakgrunn og utvikling</h2>
+          </div>
+        </div>
+
+        <div class="form-grid form-grid-2">
+          <label class="field">
+            <span>Bakgrunn</span>
+            <textarea id="noteBackground"></textarea>
+          </label>
+
+          <label class="field">
+            <span>Personlighet</span>
+            <textarea id="notePersonality"></textarea>
+          </label>
+
+          <label class="field">
+            <span>Mål / motivasjon</span>
+            <textarea id="noteGoals"></textarea>
+          </label>
+
+          <label class="field">
+            <span>GM notes</span>
+            <textarea id="noteGM"></textarea>
+          </label>
+
+          <label class="field field-wide-2">
+            <span>Utviklingslogg / earned CP / kjøp i spill</span>
+            <textarea id="noteDevelopment"></textarea>
+          </label>
+        </div>
+      </section>
+    </section>
+
+    <!-- =========================================================
+      LIBRARY
+    ========================================================== -->
+    <section id="tab-library" class="tab-panel" data-tab-panel="library">
+      <section class="card">
+        <div class="card__header">
+          <div>
+            <p class="eyebrow">Data</p>
+            <h2>Privat bibliotek</h2>
+          </div>
+          <p class="card__hint">
+            JSON-filene lastes fra <code>data/</code>. Du kan også lime inn egne data her
+            og eksportere dem senere.
+          </p>
+        </div>
+
+        <div class="library-toolbar">
+          <label class="field">
+            <span>Kategori</span>
+            <select id="libraryCategory">
+              <option value="traits">Traits</option>
+              <option value="skills">Skills</option>
+              <option value="techniques">Techniques</option>
+              <option value="spells">Spells</option>
+              <option value="weapons">Weapons</option>
+              <option value="armor">Armor</option>
+              <option value="gear">Gear</option>
+              <option value="templates">Templates</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Søk</span>
+            <input id="librarySearch" type="search" placeholder="Søk i biblioteket" />
+          </label>
+
+          <button class="btn btn-secondary" type="button" data-action="reload-library">
+            Last inn JSON på nytt
+          </button>
+
+          <button class="btn btn-primary" type="button" data-action="export-library">
+            Eksporter bibliotek
+          </button>
+        </div>
+
+        <div id="libraryList" class="library-list" aria-live="polite"></div>
+      </section>
+
+      <section class="card">
+        <div class="card__header">
+          <div>
+            <p class="eyebrow">Import</p>
+            <h2>Lim inn JSON</h2>
+          </div>
+          <p class="card__hint">
+            Brukes til å bygge opp ditt private datasett.
+          </p>
+        </div>
+
+        <label class="field">
+          <span>JSON</span>
+          <textarea id="libraryImportText" class="code-area" spellcheck="false"></textarea>
+        </label>
+
+        <div class="button-row mt">
+          <button class="btn btn-primary" type="button" data-action="import-library-json">
+            Importer til valgt kategori
+          </button>
+          <button class="btn btn-ghost" type="button" data-action="clear-library-import">
+            Tøm felt
+          </button>
+        </div>
+      </section>
+    </section>
+
+    <!-- =========================================================
+      CHARACTER SHEET
+    ========================================================== -->
+    <section id="tab-sheet" class="tab-panel" data-tab-panel="sheet">
+      <section class="sheet-toolbar no-print">
+        <button class="btn btn-secondary" type="button" data-action="toggle-sheet-edit">
+          Rediger ark
+        </button>
+        <button class="btn btn-primary" type="button" data-action="print-sheet">
+          Print / PDF
+        </button>
+      </section>
+
+      <article id="characterSheet" class="character-sheet" contenteditable="false">
+        <header class="sheet-header">
+          <div id="sheetPortrait" class="sheet-portrait">
+            <span>Portrait</span>
+          </div>
+
+          <div class="sheet-title-block">
+            <p class="eyebrow">GURPS Fourth Edition Character Sheet</p>
+            <h2 id="sheetName">Unnamed Character</h2>
+
+            <dl class="sheet-meta">
+              <div>
+                <dt>Player</dt>
+                <dd id="sheetPlayer">—</dd>
+              </div>
+              <div>
+                <dt>Campaign</dt>
+                <dd id="sheetCampaign">—</dd>
+              </div>
+              <div>
+                <dt>Concept</dt>
+                <dd id="sheetConcept">—</dd>
+              </div>
+              <div>
+                <dt>Species / Template</dt>
+                <dd id="sheetSpeciesTemplate">Human / —</dd>
+              </div>
+              <div>
+                <dt>TL</dt>
+                <dd id="sheetTL">3</dd>
+              </div>
+              <div>
+                <dt>SM</dt>
+                <dd id="sheetSM">0</dd>
+              </div>
+            </dl>
+          </div>
+
+          <aside class="sheet-points">
+            <h3>Points</h3>
+            <dl>
+              <div>
+                <dt>Budget</dt>
+                <dd id="sheetPointBudget">150</dd>
+              </div>
+              <div>
+                <dt>Total</dt>
+                <dd id="sheetTotalPoints">0</dd>
+              </div>
+              <div>
+                <dt>Remaining</dt>
+                <dd id="sheetRemainingPoints">150</dd>
+              </div>
+              <div>
+                <dt>Disad limit</dt>
+                <dd id="sheetDisadLimit">-75</dd>
+              </div>
+            </dl>
+          </aside>
+        </header>
+
+        <section class="sheet-grid">
+          <div>
+            <h3 class="sheet-section-title">Attributes</h3>
+            <div class="sheet-stat-grid">
+              <article>
+                <span>ST</span>
+                <strong id="sheetST">10</strong>
+              </article>
+              <article>
+                <span>DX</span>
+                <strong id="sheetDX">10</strong>
+              </article>
+              <article>
+                <span>IQ</span>
+                <strong id="sheetIQ">10</strong>
+              </article>
+              <article>
+                <span>HT</span>
+                <strong id="sheetHT">10</strong>
+              </article>
+            </div>
+
+            <h3 class="sheet-section-title">Secondary</h3>
+            <div class="sheet-stat-grid">
+              <article>
+                <span>HP</span>
+                <strong id="sheetHP">10</strong>
+              </article>
+              <article>
+                <span>Will</span>
+                <strong id="sheetWill">10</strong>
+              </article>
+              <article>
+                <span>Per</span>
+                <strong id="sheetPer">10</strong>
+              </article>
+              <article>
+                <span>FP</span>
+                <strong id="sheetFP">10</strong>
+              </article>
+              <article>
+                <span>Speed</span>
+                <strong id="sheetSpeed">5.00</strong>
+              </article>
+              <article>
+                <span>Move</span>
+                <strong id="sheetMove">5</strong>
+              </article>
+              <article>
+                <span>Dodge</span>
+                <strong id="sheetDodge">8</strong>
+              </article>
+              <article>
+                <span>DR</span>
+                <strong id="sheetDR">—</strong>
+              </article>
+            </div>
+
+            <h3 class="sheet-section-title">Combat summary</h3>
+            <table class="sheet-table">
+              <tbody>
+                <tr>
+                  <th>Damage</th>
+                  <td id="sheetDamage">1d-2 / 1d</td>
+                </tr>
+                <tr>
+                  <th>Basic Lift</th>
+                  <td id="sheetBasicLift">20 lb</td>
+                </tr>
+                <tr>
+                  <th>Encumbrance</th>
+                  <td id="sheetEncumbrance">None</td>
+                </tr>
+                <tr>
+                  <th>Loaded Move</th>
+                  <td id="sheetLoadedMove">5</td>
+                </tr>
+                <tr>
+                  <th>Parry / Block</th>
+                  <td id="sheetParryBlock">— / —</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div>
+            <h3 class="sheet-section-title">Traits</h3>
+            <table class="sheet-table">
+              <thead>
+                <tr>
+                  <th>Trait</th>
+                  <th>Type</th>
+                  <th>CP</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
+              <tbody id="sheetTraitsBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section>
+          <h3 class="sheet-section-title">Skills, techniques and spells</h3>
+          <table class="sheet-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Stat</th>
+                <th>Diff.</th>
+                <th>Level</th>
+                <th>Rel.</th>
+                <th>CP</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody id="sheetSkillsBody"></tbody>
+          </table>
+        </section>
+
+        <section class="sheet-grid">
+          <div>
+            <h3 class="sheet-section-title">Weapons / attacks</h3>
+            <table class="sheet-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Skill</th>
+                  <th>Damage</th>
+                  <th>Reach/Rng</th>
+                  <th>Parry</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
+              <tbody id="sheetWeaponsBody"></tbody>
+            </table>
+          </div>
+
+          <div>
+            <h3 class="sheet-section-title">Armor and gear</h3>
+            <table class="sheet-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Loc.</th>
+                  <th>DR</th>
+                  <th>Wt.</th>
+                  <th>Cost</th>
+                </tr>
+              </thead>
+              <tbody id="sheetGearBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="sheet-grid">
+          <div>
+            <h3 class="sheet-section-title">Background</h3>
+            <p id="sheetBackground" class="sheet-notes"></p>
+          </div>
+
+          <div>
+            <h3 class="sheet-section-title">Personality, goals and GM notes</h3>
+            <p id="sheetNotes" class="sheet-notes"></p>
+          </div>
+        </section>
+      </article>
+    </section>
+  </main>
+
+  <footer class="app-footer no-print">
+    <p>
+      GURPS Character Forge lagrer data lokalt i nettleseren. Offisielle regeltekster
+      og komplette kataloger bør ligge i dine egne private JSON-filer.
+    </p>
+  </footer>
+
+  <!-- Row templates used by js/app.js -->
+  <template id="emptyRowTemplate">
+    <tr>
+      <td colspan="12" class="empty-row">Ingen oppføringer ennå.</td>
+    </tr>
+  </template>
+
+  <script src="js/storage.js"></script>
+  <script src="js/calculations.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
