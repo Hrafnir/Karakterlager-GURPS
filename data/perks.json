@@ -1,0 +1,67 @@
+[
+  {
+    "name": "Accessory",
+    "type": "Perk",
+    "levels": 1,
+    "baseCost": 1,
+    "modifierPct": 0,
+    "points": 1,
+    "autoCost": false,
+    "page": "",
+    "notes": "A small built-in or always-available convenience item. Define exact item with GM.",
+    "source": "User library",
+    "tags": ["minor", "utility"]
+  },
+  {
+    "name": "Alcohol Tolerance",
+    "type": "Perk",
+    "levels": 1,
+    "baseCost": 1,
+    "modifierPct": 0,
+    "points": 1,
+    "autoCost": false,
+    "page": "",
+    "notes": "Minor resistance or tolerance related to alcohol. Check exact campaign interpretation.",
+    "source": "User library",
+    "tags": ["minor", "social", "physical"]
+  },
+  {
+    "name": "Deep Sleeper",
+    "type": "Perk",
+    "levels": 1,
+    "baseCost": 1,
+    "modifierPct": 0,
+    "points": 1,
+    "autoCost": false,
+    "page": "",
+    "notes": "Sleeps well under poor conditions.",
+    "source": "User library",
+    "tags": ["minor", "physical"]
+  },
+  {
+    "name": "Honest Face",
+    "type": "Perk",
+    "levels": 1,
+    "baseCost": 1,
+    "modifierPct": 0,
+    "points": 1,
+    "autoCost": false,
+    "page": "",
+    "notes": "Looks trustworthy or harmless in appropriate situations.",
+    "source": "User library",
+    "tags": ["minor", "social"]
+  },
+  {
+    "name": "Penetrating Voice",
+    "type": "Perk",
+    "levels": 1,
+    "baseCost": 1,
+    "modifierPct": 0,
+    "points": 1,
+    "autoCost": false,
+    "page": "",
+    "notes": "Can make voice carry well. Useful for command, performance or battlefield communication.",
+    "source": "User library",
+    "tags": ["minor", "social", "voice"]
+  }
+]
