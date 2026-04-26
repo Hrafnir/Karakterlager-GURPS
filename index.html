@@ -12,6 +12,7 @@
   />
 
   <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/sheet_themes.css" />
 </head>
 
 <body>
@@ -777,15 +778,44 @@
     ========================================================== -->
     <section id="tab-sheet" class="tab-panel" data-tab-panel="sheet">
       <section class="sheet-toolbar no-print">
+        <label class="field sheet-option">
+          <span>Theme</span>
+          <select id="sheetTheme">
+            <option value="classic">Classic</option>
+            <option value="norse">Norrøn</option>
+            <option value="medieval">Middelalder</option>
+            <option value="cyberpunk">Cyberpunk</option>
+            <option value="scifi">Sci-Fi</option>
+            <option value="pirate">Pirate</option>
+          </select>
+        </label>
+
+        <label class="field sheet-option">
+          <span>Paper</span>
+          <select id="sheetPaperSize">
+            <option value="a4">A4</option>
+            <option value="letter">Letter</option>
+          </select>
+        </label>
+
+        <label class="field sheet-option">
+          <span>Print mode</span>
+          <select id="sheetInkMode">
+            <option value="full">Full style</option>
+            <option value="ink">Ink saver</option>
+          </select>
+        </label>
+
         <button class="btn btn-secondary" type="button" data-action="toggle-sheet-edit">
           Rediger ark
         </button>
+
         <button class="btn btn-primary" type="button" data-action="print-sheet">
           Print / PDF
         </button>
       </section>
 
-      <article id="characterSheet" class="character-sheet" contenteditable="false">
+      <article id="characterSheet" class="character-sheet sheet-theme-classic sheet-paper-a4 sheet-ink-full" contenteditable="false">
         <header class="sheet-header">
           <div id="sheetPortrait" class="sheet-portrait">
             <span>Portrait</span>
@@ -1022,7 +1052,6 @@
     </p>
   </footer>
 
-  <!-- Row templates used by js/app.js -->
   <template id="emptyRowTemplate">
     <tr>
       <td colspan="12" class="empty-row">Ingen oppføringer ennå.</td>
