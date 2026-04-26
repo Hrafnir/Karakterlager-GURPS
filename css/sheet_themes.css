@@ -1,13 +1,19 @@
 /* =========================================================
    GURPS Character Forge
-   File: css/sheet-themes.css
+   File: css/sheet_themes.css
 
-   Theme layer for printable character sheets.
+   Printable sheet themes with scalable SVG frame support.
+   Expected SVG paths:
+   ../assets/themes/norse/frame.svg
+   ../assets/themes/medieval/frame.svg
+   ../assets/themes/cyberpunk/frame.svg
+   ../assets/themes/scifi/frame.svg
+   ../assets/themes/pirate/frame.svg
    ========================================================= */
 
-/* ---------------------------------------------------------
-   Shared sheet theme system
-   --------------------------------------------------------- */
+/* =========================================================
+   Shared theme engine
+   ========================================================= */
 
 .character-sheet {
   position: relative;
@@ -23,29 +29,58 @@
   --sheet-panel-soft: #f5f5f5;
   --sheet-accent: #111111;
   --sheet-accent-2: #555555;
+
   --sheet-title-font: Georgia, "Times New Roman", serif;
   --sheet-body-font: Arial, sans-serif;
+
+  --sheet-frame-image: none;
   --sheet-frame-opacity: 1;
+  --sheet-frame-inset: 0;
+  --sheet-frame-border: 2px solid var(--sheet-line);
+  --sheet-frame-padding-screen: 1.6rem;
+  --sheet-frame-padding-print: 8mm;
+
+  --sheet-text-shadow: none;
+  --sheet-panel-alpha: 0.94;
+
+  background: var(--sheet-bg);
+  color: var(--sheet-ink);
+  font-family: var(--sheet-body-font);
+  padding: var(--sheet-frame-padding-screen);
 }
 
+/* Background texture layer */
 .character-sheet::before {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: -2;
+  z-index: -3;
+  pointer-events: none;
   background: var(--sheet-bg);
 }
 
+/* Scalable SVG frame layer */
 .character-sheet::after {
   content: "";
   position: absolute;
-  inset: 0.35rem;
+  inset: var(--sheet-frame-inset);
   z-index: -1;
   pointer-events: none;
-  border: 3px double var(--sheet-line);
   opacity: var(--sheet-frame-opacity);
+  border: var(--sheet-frame-border);
+  background-image: var(--sheet-frame-image);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
 }
 
+/* Content should stay above frame/background */
+.character-sheet > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Typography */
 .character-sheet,
 .character-sheet * {
   color: var(--sheet-ink);
@@ -64,9 +99,8 @@
   font-family: var(--sheet-title-font);
 }
 
-.character-sheet {
-  font-family: var(--sheet-body-font);
-  background: var(--sheet-bg);
+.character-sheet .sheet-title-block h2 {
+  text-shadow: var(--sheet-text-shadow);
 }
 
 .character-sheet .sheet-section-title {
@@ -93,20 +127,13 @@
 }
 
 .character-sheet .sheet-points,
-.character-sheet .sheet-notes {
-  background: color-mix(in srgb, var(--sheet-panel) 92%, transparent);
+.character-sheet .sheet-notes,
+.character-sheet .sheet-table,
+.character-sheet .sheet-stat-grid article {
+  background: color-mix(in srgb, var(--sheet-panel) calc(var(--sheet-panel-alpha) * 100%), transparent);
 }
 
-/* Paper sizing on screen */
-.character-sheet.sheet-paper-a4 {
-  aspect-ratio: auto;
-}
-
-.character-sheet.sheet-paper-letter {
-  max-width: 1050px;
-}
-
-/* Toolbar layout */
+/* Sheet toolbar */
 .sheet-toolbar {
   align-items: end;
   flex-wrap: wrap;
@@ -120,9 +147,21 @@
   min-height: 2.5rem;
 }
 
-/* ---------------------------------------------------------
-   Classic
-   --------------------------------------------------------- */
+/* =========================================================
+   Paper modes
+   ========================================================= */
+
+.character-sheet.sheet-paper-a4 {
+  max-width: 1120px;
+}
+
+.character-sheet.sheet-paper-letter {
+  max-width: 1050px;
+}
+
+/* =========================================================
+   Classic theme
+   ========================================================= */
 
 .sheet-theme-classic {
   --sheet-bg: #ffffff;
@@ -133,17 +172,24 @@
   --sheet-panel: #ffffff;
   --sheet-panel-soft: #f4f4f5;
   --sheet-accent: #111111;
+  --sheet-accent-2: #555555;
+
   --sheet-title-font: Georgia, "Times New Roman", serif;
   --sheet-body-font: Arial, sans-serif;
+
+  --sheet-frame-image: none;
+  --sheet-frame-border: 2px solid #111111;
+  --sheet-frame-padding-screen: 1.5rem;
+  --sheet-frame-padding-print: 7mm;
 }
 
-.sheet-theme-classic::after {
-  border: 2px solid var(--sheet-line);
+.sheet-theme-classic::before {
+  background: #ffffff;
 }
 
-/* ---------------------------------------------------------
-   Norse
-   --------------------------------------------------------- */
+/* =========================================================
+   Norse theme
+   ========================================================= */
 
 .sheet-theme-norse {
   --sheet-bg: #f3ead7;
@@ -155,8 +201,15 @@
   --sheet-panel-soft: #ead9b8;
   --sheet-accent: #5b1f13;
   --sheet-accent-2: #9a5b25;
+
   --sheet-title-font: Georgia, "Times New Roman", serif;
   --sheet-body-font: "Trebuchet MS", Arial, sans-serif;
+
+  --sheet-frame-image: url("../assets/themes/norse/frame.svg");
+  --sheet-frame-border: none;
+  --sheet-frame-inset: 0.15rem;
+  --sheet-frame-padding-screen: 2.3rem;
+  --sheet-frame-padding-print: 10mm;
 }
 
 .sheet-theme-norse::before {
@@ -164,14 +217,6 @@
     radial-gradient(circle at 12% 10%, rgb(91 31 19 / 0.13), transparent 10rem),
     radial-gradient(circle at 90% 92%, rgb(80 55 20 / 0.13), transparent 12rem),
     linear-gradient(135deg, #f7efd9, #e8d7b5);
-}
-
-.sheet-theme-norse::after {
-  inset: 0.45rem;
-  border: 4px double #3a2416;
-  box-shadow:
-    inset 0 0 0 5px rgb(154 91 37 / 0.22),
-    inset 0 0 0 12px rgb(58 36 22 / 0.08);
 }
 
 .sheet-theme-norse .sheet-title-block h2::first-letter {
@@ -188,9 +233,9 @@
   color: var(--sheet-accent-2);
 }
 
-/* ---------------------------------------------------------
-   Medieval
-   --------------------------------------------------------- */
+/* =========================================================
+   Medieval theme
+   ========================================================= */
 
 .sheet-theme-medieval {
   --sheet-bg: #fbf0cf;
@@ -202,8 +247,15 @@
   --sheet-panel-soft: #ecd7a7;
   --sheet-accent: #7f1d1d;
   --sheet-accent-2: #b45309;
+
   --sheet-title-font: Georgia, "Times New Roman", serif;
   --sheet-body-font: Georgia, "Times New Roman", serif;
+
+  --sheet-frame-image: url("../assets/themes/medieval/frame.svg");
+  --sheet-frame-border: none;
+  --sheet-frame-inset: 0.1rem;
+  --sheet-frame-padding-screen: 2.35rem;
+  --sheet-frame-padding-print: 10mm;
 }
 
 .sheet-theme-medieval::before {
@@ -211,13 +263,6 @@
     radial-gradient(circle at top left, rgb(127 29 29 / 0.15), transparent 9rem),
     radial-gradient(circle at bottom right, rgb(180 83 9 / 0.15), transparent 10rem),
     linear-gradient(180deg, #fff3ce, #f2dfad);
-}
-
-.sheet-theme-medieval::after {
-  border: 5px ridge #7f1d1d;
-  box-shadow:
-    inset 0 0 0 8px rgb(180 83 9 / 0.18),
-    inset 0 0 0 18px rgb(127 29 29 / 0.06);
 }
 
 .sheet-theme-medieval .sheet-section-title {
@@ -228,9 +273,13 @@
   color: #5f1717;
 }
 
-/* ---------------------------------------------------------
-   Cyberpunk
-   --------------------------------------------------------- */
+.sheet-theme-medieval .sheet-title-block h2::first-letter {
+  color: #b45309;
+}
+
+/* =========================================================
+   Cyberpunk theme
+   ========================================================= */
 
 .sheet-theme-cyberpunk {
   --sheet-bg: #06070d;
@@ -242,8 +291,21 @@
   --sheet-panel-soft: #101827;
   --sheet-accent: #f472b6;
   --sheet-accent-2: #22d3ee;
+
   --sheet-title-font: "Courier New", ui-monospace, monospace;
   --sheet-body-font: "Courier New", ui-monospace, monospace;
+
+  --sheet-frame-image: url("../assets/themes/cyberpunk/frame.svg");
+  --sheet-frame-border: none;
+  --sheet-frame-inset: 0.15rem;
+  --sheet-frame-padding-screen: 2.05rem;
+  --sheet-frame-padding-print: 9mm;
+
+  --sheet-text-shadow:
+    0 0 8px rgb(34 211 238 / 0.45),
+    2px 0 0 rgb(244 114 182 / 0.35);
+
+  --sheet-panel-alpha: 0.88;
 }
 
 .sheet-theme-cyberpunk::before {
@@ -261,19 +323,11 @@
     auto;
 }
 
-.sheet-theme-cyberpunk::after {
-  border: 2px solid #22d3ee;
-  box-shadow:
-    inset 0 0 0 1px #f472b6,
-    0 0 18px rgb(34 211 238 / 0.35),
-    inset 0 0 24px rgb(244 114 182 / 0.12);
-}
-
 .sheet-theme-cyberpunk .sheet-table th,
 .sheet-theme-cyberpunk .sheet-stat-grid article,
 .sheet-theme-cyberpunk .sheet-points,
 .sheet-theme-cyberpunk .sheet-notes {
-  background: rgb(8 17 31 / 0.9);
+  background: rgb(8 17 31 / 0.92);
 }
 
 .sheet-theme-cyberpunk .sheet-section-title {
@@ -283,14 +337,15 @@
 
 .sheet-theme-cyberpunk .sheet-title-block h2 {
   color: #e6fbff;
-  text-shadow:
-    0 0 8px rgb(34 211 238 / 0.5),
-    2px 0 0 rgb(244 114 182 / 0.45);
 }
 
-/* ---------------------------------------------------------
-   Sci-Fi
-   --------------------------------------------------------- */
+.sheet-theme-cyberpunk .sheet-table th {
+  color: #e6fbff;
+}
+
+/* =========================================================
+   Sci-Fi theme
+   ========================================================= */
 
 .sheet-theme-scifi {
   --sheet-bg: #eef4f8;
@@ -302,44 +357,43 @@
   --sheet-panel-soft: #dbeafe;
   --sheet-accent: #075985;
   --sheet-accent-2: #0f766e;
+
   --sheet-title-font: Arial, sans-serif;
   --sheet-body-font: Arial, sans-serif;
+
+  --sheet-frame-image: url("../assets/themes/scifi/frame.svg");
+  --sheet-frame-border: none;
+  --sheet-frame-inset: 0.1rem;
+  --sheet-frame-padding-screen: 2rem;
+  --sheet-frame-padding-print: 9mm;
 }
 
 .sheet-theme-scifi::before {
   background:
+    linear-gradient(120deg, rgb(14 116 144 / 0.05) 0 1px, transparent 1px 18px),
     radial-gradient(circle at 85% 10%, rgb(14 116 144 / 0.14), transparent 11rem),
     linear-gradient(135deg, #f8fbff, #dbeafe);
-}
-
-.sheet-theme-scifi::after {
-  border: 2px solid #1e3a5f;
-  clip-path: polygon(
-    0 2%,
-    2% 0,
-    98% 0,
-    100% 2%,
-    100% 98%,
-    98% 100%,
-    2% 100%,
-    0 98%
-  );
-  box-shadow:
-    inset 0 0 0 8px rgb(14 116 144 / 0.10),
-    inset 0 0 0 16px rgb(30 58 95 / 0.05);
 }
 
 .sheet-theme-scifi .sheet-section-title {
   color: var(--sheet-accent);
 }
 
-.sheet-theme-scifi .sheet-stat-grid article {
+.sheet-theme-scifi .sheet-stat-grid article,
+.sheet-theme-scifi .sheet-points,
+.sheet-theme-scifi .sheet-notes,
+.sheet-theme-scifi .sheet-table th,
+.sheet-theme-scifi .sheet-table td {
   border-radius: 0;
 }
 
-/* ---------------------------------------------------------
-   Pirate
-   --------------------------------------------------------- */
+.sheet-theme-scifi .sheet-title-block h2 {
+  letter-spacing: -0.07em;
+}
+
+/* =========================================================
+   Pirate theme
+   ========================================================= */
 
 .sheet-theme-pirate {
   --sheet-bg: #f6e2b8;
@@ -351,8 +405,15 @@
   --sheet-panel-soft: #ead39a;
   --sheet-accent: #7c2d12;
   --sheet-accent-2: #0f3d4c;
+
   --sheet-title-font: Georgia, "Times New Roman", serif;
   --sheet-body-font: Georgia, "Times New Roman", serif;
+
+  --sheet-frame-image: url("../assets/themes/pirate/frame.svg");
+  --sheet-frame-border: none;
+  --sheet-frame-inset: 0.12rem;
+  --sheet-frame-padding-screen: 2.25rem;
+  --sheet-frame-padding-print: 10mm;
 }
 
 .sheet-theme-pirate::before {
@@ -360,13 +421,6 @@
     radial-gradient(circle at 15% 20%, rgb(15 61 76 / 0.12), transparent 12rem),
     radial-gradient(circle at 90% 70%, rgb(124 45 18 / 0.14), transparent 12rem),
     linear-gradient(135deg, #fae8bd, #e8c98c);
-}
-
-.sheet-theme-pirate::after {
-  border: 4px double #3a2416;
-  box-shadow:
-    inset 0 0 0 7px rgb(15 61 76 / 0.12),
-    inset 0 0 0 15px rgb(124 45 18 / 0.08);
 }
 
 .sheet-theme-pirate .sheet-section-title::before {
@@ -378,23 +432,20 @@
   color: #3a2416;
 }
 
-/* ---------------------------------------------------------
+/* =========================================================
    Ink saver mode
-   --------------------------------------------------------- */
+   ========================================================= */
 
 .character-sheet.sheet-ink-saver {
   --sheet-bg: #ffffff;
   --sheet-panel: #ffffff;
   --sheet-panel-soft: #ffffff;
-  --sheet-frame-opacity: 0.9;
+  --sheet-frame-opacity: 0.75;
+  --sheet-panel-alpha: 1;
 }
 
 .character-sheet.sheet-ink-saver::before {
   background: #ffffff !important;
-}
-
-.character-sheet.sheet-ink-saver::after {
-  box-shadow: none !important;
 }
 
 .character-sheet.sheet-ink-saver .sheet-table th,
@@ -404,9 +455,24 @@
   background: #ffffff !important;
 }
 
-/* ---------------------------------------------------------
+.character-sheet.sheet-ink-saver.sheet-theme-cyberpunk {
+  --sheet-ink: #111111;
+  --sheet-muted: #555555;
+  --sheet-line: #111111;
+  --sheet-soft-line: #777777;
+  --sheet-accent: #111111;
+  --sheet-accent-2: #444444;
+  --sheet-text-shadow: none;
+}
+
+/* Keep SVG frame but reduce visual weight in ink mode */
+.character-sheet.sheet-ink-saver::after {
+  filter: grayscale(1);
+}
+
+/* =========================================================
    Print
-   --------------------------------------------------------- */
+   ========================================================= */
 
 @media print {
   .sheet-toolbar {
@@ -417,6 +483,15 @@
     box-shadow: none !important;
     border: 0 !important;
     border-radius: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    padding: var(--sheet-frame-padding-print) !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .character-sheet::after {
+    inset: 0 !important;
   }
 
   .character-sheet.sheet-paper-a4 {
@@ -425,9 +500,5 @@
 
   .character-sheet.sheet-paper-letter {
     width: 100%;
-  }
-
-  .character-sheet::after {
-    inset: 0;
   }
 }
