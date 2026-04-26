@@ -5,7 +5,7 @@
    Purpose:
    Main app controller.
    Depends on:
-   - js/storage.js     -> window.GURPSStorage
+   - js/storage.js      -> window.GURPSStorage
    - js/calculations.js -> window.GURPSCalc
    ========================================================= */
 
@@ -68,6 +68,9 @@
       startingWealthOverride: "",
       campaignPremise: "",
       houseRules: "",
+      sheetTheme: "classic",
+      sheetPaperSize: "a4",
+      sheetInkMode: "full",
     },
 
     portrait: "",
@@ -155,15 +158,9 @@
   function setInputValue(id, value) {
     const el = $(id);
     if (!el) return;
-
     if (document.activeElement === el) return;
 
     el.value = value ?? "";
-  }
-
-  function getCharacterFilename() {
-    const name = state.character.meta.name || "gurps-character";
-    return Storage.sanitizeFilename(name, "gurps-character");
   }
 
   function persistCharacter() {
@@ -174,7 +171,7 @@
     Storage.saveLibrary(state.library);
   }
 
-  function setCharacter(mutator) {
+  function setCharacter(mutator, renderMode = "full") {
     const next =
       typeof mutator === "function"
         ? mutator(Storage.clone(state.character))
@@ -182,6 +179,15 @@
 
     state.character = next;
     persistCharacter();
+
+    if (renderMode === "none") return;
+
+    if (renderMode === "summary") {
+      renderSummary();
+      renderSheet();
+      return;
+    }
+
     render();
   }
 
@@ -372,14 +378,14 @@
     });
   }
 
-  function getListByName(name) {
-    if (name === "traits") return state.character.traits;
-    if (name === "skills") return state.character.skills;
-    if (name === "techniques") return state.character.techniques;
-    if (name === "spells") return state.character.spells;
-    if (name === "attacks") return state.character.attacks;
-    if (name === "armor") return state.character.armor;
-    if (name === "equipment") return state.character.equipment;
+  function getListByNameFromCharacter(character, name) {
+    if (name === "traits") return character.traits;
+    if (name === "skills") return character.skills;
+    if (name === "techniques") return character.techniques;
+    if (name === "spells") return character.spells;
+    if (name === "attacks") return character.attacks;
+    if (name === "armor") return character.armor;
+    if (name === "equipment") return character.equipment;
     return [];
   }
 
@@ -393,38 +399,35 @@
     if (name === "equipment") character.equipment = list;
   }
 
-  function updateListItem(listName, rowId, field, value, type = "text") {
-    setCharacter((character) => {
-      const list = getListByNameFromCharacter(character, listName);
+  function updateListItem(listName, rowId, field, value, type = "text", shouldRender = false) {
+    const character = Storage.clone(state.character);
+    const list = getListByNameFromCharacter(character, listName);
 
-      const next = list.map((item) => {
-        if (item.id !== rowId) return item;
+    const next = list.map((item) => {
+      if (item.id !== rowId) return item;
 
-        let parsedValue = value;
+      let parsedValue = value;
 
-        if (type === "number") parsedValue = number(value, 0);
-        if (type === "checkbox") parsedValue = Boolean(value);
+      if (type === "number") parsedValue = number(value, 0);
+      if (type === "checkbox") parsedValue = Boolean(value);
 
-        return {
-          ...item,
-          [field]: parsedValue,
-        };
-      });
-
-      setListByName(character, listName, next);
-      return character;
+      return {
+        ...item,
+        [field]: parsedValue,
+      };
     });
-  }
 
-  function getListByNameFromCharacter(character, name) {
-    if (name === "traits") return character.traits;
-    if (name === "skills") return character.skills;
-    if (name === "techniques") return character.techniques;
-    if (name === "spells") return character.spells;
-    if (name === "attacks") return character.attacks;
-    if (name === "armor") return character.armor;
-    if (name === "equipment") return character.equipment;
-    return [];
+    setListByName(character, listName, next);
+
+    state.character = character;
+    persistCharacter();
+
+    if (shouldRender) {
+      render();
+    } else {
+      renderSummary();
+      renderSheet();
+    }
   }
 
   function addRow(listName, row) {
@@ -839,7 +842,6 @@
     if (!select) return;
 
     const items = state.library[category] || [];
-
     const label = select.querySelector("option")?.textContent || "Fra bibliotek";
 
     select.innerHTML = `
@@ -910,6 +912,10 @@
     setInputValue("charCampaignPremise", c.meta.campaignPremise);
     setInputValue("charHouseRules", c.meta.houseRules);
 
+    setInputValue("sheetTheme", c.meta.sheetTheme || "classic");
+    setInputValue("sheetPaperSize", c.meta.sheetPaperSize || "a4");
+    setInputValue("sheetInkMode", c.meta.sheetInkMode || "full");
+
     setInputValue("statST", c.stats.ST);
     setInputValue("statDX", c.stats.DX);
     setInputValue("statIQ", c.stats.IQ);
@@ -972,12 +978,41 @@
       .join("");
   }
 
+  function applySheetThemeClasses(sheet, c) {
+    const theme = c.meta.sheetTheme || "classic";
+    const paperSize = c.meta.sheetPaperSize || "a4";
+    const inkMode = c.meta.sheetInkMode || "full";
+
+    sheet.classList.remove(
+      "sheet-theme-classic",
+      "sheet-theme-norse",
+      "sheet-theme-medieval",
+      "sheet-theme-cyberpunk",
+      "sheet-theme-scifi",
+      "sheet-theme-pirate",
+      "sheet-paper-a4",
+      "sheet-paper-letter",
+      "sheet-ink-full",
+      "sheet-ink-saver"
+    );
+
+    sheet.classList.add(
+      `sheet-theme-${theme}`,
+      `sheet-paper-${paperSize}`,
+      inkMode === "ink" ? "sheet-ink-saver" : "sheet-ink-full"
+    );
+  }
+
   function renderSheet() {
     const c = state.character;
     const calc = Calc.calculateCharacter(c);
 
     const sheet = $("characterSheet");
-    if (sheet) sheet.contentEditable = state.sheetEdit ? "true" : "false";
+
+    if (sheet) {
+      sheet.contentEditable = state.sheetEdit ? "true" : "false";
+      applySheetThemeClasses(sheet, c);
+    }
 
     setText("sheetName", c.meta.name || "Unnamed Character");
     setText("sheetPlayer", c.meta.player || "—");
@@ -1228,6 +1263,10 @@
     bindField("charCampaignPremise", (value) => setMetaField("campaignPremise", value));
     bindField("charHouseRules", (value) => setMetaField("houseRules", value));
 
+    bindField("sheetTheme", (value) => setMetaField("sheetTheme", value), "change");
+    bindField("sheetPaperSize", (value) => setMetaField("sheetPaperSize", value), "change");
+    bindField("sheetInkMode", (value) => setMetaField("sheetInkMode", value), "change");
+
     bindField("statST", (value) => setStatField("ST", value));
     bindField("statDX", (value) => setStatField("DX", value));
     bindField("statIQ", (value) => setStatField("IQ", value));
@@ -1337,7 +1376,8 @@
         target.dataset.id,
         target.dataset.field,
         target.value,
-        target.dataset.valueType || "text"
+        target.dataset.valueType || "text",
+        false
       );
     });
 
@@ -1353,7 +1393,8 @@
         target.dataset.id,
         target.dataset.field,
         value,
-        target.dataset.valueType || "text"
+        target.dataset.valueType || "text",
+        true
       );
     });
   }
@@ -1492,7 +1533,10 @@
         );
 
         persistLibrary();
-        $("libraryImportText").value = "";
+
+        const importText = $("libraryImportText");
+        if (importText) importText.value = "";
+
         render();
       } catch (error) {
         alert(error.message || "Kunne ikke importere JSON.");
@@ -1502,7 +1546,8 @@
     }
 
     if (action === "clear-library-import") {
-      if ($("libraryImportText")) $("libraryImportText").value = "";
+      const importText = $("libraryImportText");
+      if (importText) importText.value = "";
       return;
     }
 
