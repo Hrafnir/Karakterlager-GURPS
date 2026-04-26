@@ -1,0 +1,161 @@
+[
+  {
+    "name": "Low-Fantasy Warrior",
+    "points": 100,
+    "traits": [
+      {
+        "name": "Combat Reflexes",
+        "type": "Advantage",
+        "points": 15,
+        "notes": "Optional; remove for grittier realism."
+      },
+      {
+        "name": "Code of Honor",
+        "type": "Disadvantage",
+        "points": -10,
+        "notes": "Specify warrior code."
+      }
+    ],
+    "skills": [
+      {
+        "name": "Broadsword",
+        "stat": "DX",
+        "difficulty": "Average",
+        "points": 4
+      },
+      {
+        "name": "Shield",
+        "specialty": "Shield",
+        "stat": "DX",
+        "difficulty": "Easy",
+        "points": 2
+      },
+      {
+        "name": "Hiking",
+        "stat": "HT",
+        "difficulty": "Average",
+        "points": 2
+      },
+      {
+        "name": "Tactics",
+        "stat": "IQ",
+        "difficulty": "Hard",
+        "points": 1
+      }
+    ],
+    "notes": "Starter concept template, not automatically applied by current app version. Use as reference or manually add entries.",
+    "page": "",
+    "source": "User library",
+    "tags": ["template", "fantasy", "warrior"]
+  },
+  {
+    "name": "Wilderness Scout",
+    "points": 100,
+    "traits": [
+      {
+        "name": "Absolute Direction",
+        "type": "Advantage",
+        "points": 5,
+        "notes": ""
+      },
+      {
+        "name": "Sense of Duty",
+        "type": "Disadvantage",
+        "points": -5,
+        "notes": "Specify companions, tribe or homeland."
+      }
+    ],
+    "skills": [
+      {
+        "name": "Bow",
+        "stat": "DX",
+        "difficulty": "Average",
+        "points": 4
+      },
+      {
+        "name": "Stealth",
+        "stat": "DX",
+        "difficulty": "Average",
+        "points": 2
+      },
+      {
+        "name": "Survival",
+        "specialty": "Woodlands",
+        "stat": "Per",
+        "difficulty": "Average",
+        "points": 4
+      },
+      {
+        "name": "Tracking",
+        "stat": "Per",
+        "difficulty": "Average",
+        "points": 2
+      },
+      {
+        "name": "Navigation",
+        "specialty": "Land",
+        "stat": "IQ",
+        "difficulty": "Average",
+        "points": 1
+      }
+    ],
+    "notes": "Starter concept template for ranger, scout, hunter or guide.",
+    "page": "",
+    "source": "User library",
+    "tags": ["template", "fantasy", "scout", "wilderness"]
+  },
+  {
+    "name": "Urban Investigator",
+    "points": 100,
+    "traits": [
+      {
+        "name": "Common Sense",
+        "type": "Advantage",
+        "points": 10,
+        "notes": ""
+      },
+      {
+        "name": "Curious",
+        "type": "Disadvantage",
+        "points": -5,
+        "notes": "Add self-control details."
+      }
+    ],
+    "skills": [
+      {
+        "name": "Observation",
+        "stat": "Per",
+        "difficulty": "Average",
+        "points": 2
+      },
+      {
+        "name": "Search",
+        "stat": "Per",
+        "difficulty": "Average",
+        "points": 2
+      },
+      {
+        "name": "Research",
+        "stat": "IQ",
+        "difficulty": "Average",
+        "points": 2
+      },
+      {
+        "name": "Streetwise",
+        "stat": "IQ",
+        "difficulty": "Average",
+        "points": 2
+      },
+      {
+        "name": "Detect Lies",
+        "stat": "Per",
+        "difficulty": "Hard",
+        "points": 2
+      }
+    ],
+    "notes": "Starter concept for detective, watchman, spy or information broker.",
+    "page": "",
+    "source": "User library",
+    "tags": ["template", "urban", "investigator"]
+  }
+]
