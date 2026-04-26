@@ -1,0 +1,433 @@
+/* =========================================================
+   GURPS Character Forge
+   File: css/sheet-themes.css
+
+   Theme layer for printable character sheets.
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   Shared sheet theme system
+   --------------------------------------------------------- */
+
+.character-sheet {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+
+  --sheet-bg: #ffffff;
+  --sheet-ink: #111111;
+  --sheet-muted: #555555;
+  --sheet-line: #222222;
+  --sheet-soft-line: #999999;
+  --sheet-panel: #ffffff;
+  --sheet-panel-soft: #f5f5f5;
+  --sheet-accent: #111111;
+  --sheet-accent-2: #555555;
+  --sheet-title-font: Georgia, "Times New Roman", serif;
+  --sheet-body-font: Arial, sans-serif;
+  --sheet-frame-opacity: 1;
+}
+
+.character-sheet::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: var(--sheet-bg);
+}
+
+.character-sheet::after {
+  content: "";
+  position: absolute;
+  inset: 0.35rem;
+  z-index: -1;
+  pointer-events: none;
+  border: 3px double var(--sheet-line);
+  opacity: var(--sheet-frame-opacity);
+}
+
+.character-sheet,
+.character-sheet * {
+  color: var(--sheet-ink);
+}
+
+.character-sheet .eyebrow,
+.character-sheet .sheet-meta dt,
+.character-sheet .sheet-points dt,
+.character-sheet .sheet-stat-grid span {
+  color: var(--sheet-muted);
+}
+
+.character-sheet .sheet-title-block h2,
+.character-sheet .sheet-section-title,
+.character-sheet .sheet-points h3 {
+  font-family: var(--sheet-title-font);
+}
+
+.character-sheet {
+  font-family: var(--sheet-body-font);
+  background: var(--sheet-bg);
+}
+
+.character-sheet .sheet-section-title {
+  border-bottom-color: var(--sheet-line);
+  color: var(--sheet-accent);
+}
+
+.character-sheet .sheet-header {
+  border-bottom-color: var(--sheet-line);
+}
+
+.character-sheet .sheet-portrait,
+.character-sheet .sheet-points,
+.character-sheet .sheet-stat-grid article,
+.character-sheet .sheet-notes,
+.character-sheet .sheet-table th,
+.character-sheet .sheet-table td {
+  border-color: var(--sheet-soft-line);
+}
+
+.character-sheet .sheet-table th,
+.character-sheet .sheet-stat-grid article {
+  background: var(--sheet-panel-soft);
+}
+
+.character-sheet .sheet-points,
+.character-sheet .sheet-notes {
+  background: color-mix(in srgb, var(--sheet-panel) 92%, transparent);
+}
+
+/* Paper sizing on screen */
+.character-sheet.sheet-paper-a4 {
+  aspect-ratio: auto;
+}
+
+.character-sheet.sheet-paper-letter {
+  max-width: 1050px;
+}
+
+/* Toolbar layout */
+.sheet-toolbar {
+  align-items: end;
+  flex-wrap: wrap;
+}
+
+.sheet-option {
+  min-width: 150px;
+}
+
+.sheet-option select {
+  min-height: 2.5rem;
+}
+
+/* ---------------------------------------------------------
+   Classic
+   --------------------------------------------------------- */
+
+.sheet-theme-classic {
+  --sheet-bg: #ffffff;
+  --sheet-ink: #111111;
+  --sheet-muted: #555555;
+  --sheet-line: #111111;
+  --sheet-soft-line: #999999;
+  --sheet-panel: #ffffff;
+  --sheet-panel-soft: #f4f4f5;
+  --sheet-accent: #111111;
+  --sheet-title-font: Georgia, "Times New Roman", serif;
+  --sheet-body-font: Arial, sans-serif;
+}
+
+.sheet-theme-classic::after {
+  border: 2px solid var(--sheet-line);
+}
+
+/* ---------------------------------------------------------
+   Norse
+   --------------------------------------------------------- */
+
+.sheet-theme-norse {
+  --sheet-bg: #f3ead7;
+  --sheet-ink: #23170f;
+  --sheet-muted: #6b4e34;
+  --sheet-line: #3a2416;
+  --sheet-soft-line: #8a6a48;
+  --sheet-panel: #fff8e8;
+  --sheet-panel-soft: #ead9b8;
+  --sheet-accent: #5b1f13;
+  --sheet-accent-2: #9a5b25;
+  --sheet-title-font: Georgia, "Times New Roman", serif;
+  --sheet-body-font: "Trebuchet MS", Arial, sans-serif;
+}
+
+.sheet-theme-norse::before {
+  background:
+    radial-gradient(circle at 12% 10%, rgb(91 31 19 / 0.13), transparent 10rem),
+    radial-gradient(circle at 90% 92%, rgb(80 55 20 / 0.13), transparent 12rem),
+    linear-gradient(135deg, #f7efd9, #e8d7b5);
+}
+
+.sheet-theme-norse::after {
+  inset: 0.45rem;
+  border: 4px double #3a2416;
+  box-shadow:
+    inset 0 0 0 5px rgb(154 91 37 / 0.22),
+    inset 0 0 0 12px rgb(58 36 22 / 0.08);
+}
+
+.sheet-theme-norse .sheet-title-block h2::first-letter {
+  color: var(--sheet-accent);
+}
+
+.sheet-theme-norse .sheet-section-title::before {
+  content: "ᛞ ";
+  color: var(--sheet-accent-2);
+}
+
+.sheet-theme-norse .sheet-section-title::after {
+  content: " ᛟ";
+  color: var(--sheet-accent-2);
+}
+
+/* ---------------------------------------------------------
+   Medieval
+   --------------------------------------------------------- */
+
+.sheet-theme-medieval {
+  --sheet-bg: #fbf0cf;
+  --sheet-ink: #20150e;
+  --sheet-muted: #6b4b2f;
+  --sheet-line: #4b2614;
+  --sheet-soft-line: #a77a44;
+  --sheet-panel: #fff7db;
+  --sheet-panel-soft: #ecd7a7;
+  --sheet-accent: #7f1d1d;
+  --sheet-accent-2: #b45309;
+  --sheet-title-font: Georgia, "Times New Roman", serif;
+  --sheet-body-font: Georgia, "Times New Roman", serif;
+}
+
+.sheet-theme-medieval::before {
+  background:
+    radial-gradient(circle at top left, rgb(127 29 29 / 0.15), transparent 9rem),
+    radial-gradient(circle at bottom right, rgb(180 83 9 / 0.15), transparent 10rem),
+    linear-gradient(180deg, #fff3ce, #f2dfad);
+}
+
+.sheet-theme-medieval::after {
+  border: 5px ridge #7f1d1d;
+  box-shadow:
+    inset 0 0 0 8px rgb(180 83 9 / 0.18),
+    inset 0 0 0 18px rgb(127 29 29 / 0.06);
+}
+
+.sheet-theme-medieval .sheet-section-title {
+  color: #7f1d1d;
+}
+
+.sheet-theme-medieval .sheet-title-block h2 {
+  color: #5f1717;
+}
+
+/* ---------------------------------------------------------
+   Cyberpunk
+   --------------------------------------------------------- */
+
+.sheet-theme-cyberpunk {
+  --sheet-bg: #06070d;
+  --sheet-ink: #e6fbff;
+  --sheet-muted: #8be9ff;
+  --sheet-line: #22d3ee;
+  --sheet-soft-line: #0e7490;
+  --sheet-panel: #08111f;
+  --sheet-panel-soft: #101827;
+  --sheet-accent: #f472b6;
+  --sheet-accent-2: #22d3ee;
+  --sheet-title-font: "Courier New", ui-monospace, monospace;
+  --sheet-body-font: "Courier New", ui-monospace, monospace;
+}
+
+.sheet-theme-cyberpunk::before {
+  background:
+    linear-gradient(rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    radial-gradient(circle at 15% 15%, rgb(244 114 182 / 0.18), transparent 10rem),
+    radial-gradient(circle at 85% 80%, rgb(34 211 238 / 0.18), transparent 12rem),
+    #06070d;
+  background-size:
+    18px 18px,
+    18px 18px,
+    auto,
+    auto,
+    auto;
+}
+
+.sheet-theme-cyberpunk::after {
+  border: 2px solid #22d3ee;
+  box-shadow:
+    inset 0 0 0 1px #f472b6,
+    0 0 18px rgb(34 211 238 / 0.35),
+    inset 0 0 24px rgb(244 114 182 / 0.12);
+}
+
+.sheet-theme-cyberpunk .sheet-table th,
+.sheet-theme-cyberpunk .sheet-stat-grid article,
+.sheet-theme-cyberpunk .sheet-points,
+.sheet-theme-cyberpunk .sheet-notes {
+  background: rgb(8 17 31 / 0.9);
+}
+
+.sheet-theme-cyberpunk .sheet-section-title {
+  color: var(--sheet-accent);
+  text-shadow: 0 0 8px rgb(244 114 182 / 0.45);
+}
+
+.sheet-theme-cyberpunk .sheet-title-block h2 {
+  color: #e6fbff;
+  text-shadow:
+    0 0 8px rgb(34 211 238 / 0.5),
+    2px 0 0 rgb(244 114 182 / 0.45);
+}
+
+/* ---------------------------------------------------------
+   Sci-Fi
+   --------------------------------------------------------- */
+
+.sheet-theme-scifi {
+  --sheet-bg: #eef4f8;
+  --sheet-ink: #10202f;
+  --sheet-muted: #475569;
+  --sheet-line: #1e3a5f;
+  --sheet-soft-line: #7a94ad;
+  --sheet-panel: #ffffff;
+  --sheet-panel-soft: #dbeafe;
+  --sheet-accent: #075985;
+  --sheet-accent-2: #0f766e;
+  --sheet-title-font: Arial, sans-serif;
+  --sheet-body-font: Arial, sans-serif;
+}
+
+.sheet-theme-scifi::before {
+  background:
+    radial-gradient(circle at 85% 10%, rgb(14 116 144 / 0.14), transparent 11rem),
+    linear-gradient(135deg, #f8fbff, #dbeafe);
+}
+
+.sheet-theme-scifi::after {
+  border: 2px solid #1e3a5f;
+  clip-path: polygon(
+    0 2%,
+    2% 0,
+    98% 0,
+    100% 2%,
+    100% 98%,
+    98% 100%,
+    2% 100%,
+    0 98%
+  );
+  box-shadow:
+    inset 0 0 0 8px rgb(14 116 144 / 0.10),
+    inset 0 0 0 16px rgb(30 58 95 / 0.05);
+}
+
+.sheet-theme-scifi .sheet-section-title {
+  color: var(--sheet-accent);
+}
+
+.sheet-theme-scifi .sheet-stat-grid article {
+  border-radius: 0;
+}
+
+/* ---------------------------------------------------------
+   Pirate
+   --------------------------------------------------------- */
+
+.sheet-theme-pirate {
+  --sheet-bg: #f6e2b8;
+  --sheet-ink: #24130b;
+  --sheet-muted: #6b4a2d;
+  --sheet-line: #3a2416;
+  --sheet-soft-line: #8a6a48;
+  --sheet-panel: #fff1c9;
+  --sheet-panel-soft: #ead39a;
+  --sheet-accent: #7c2d12;
+  --sheet-accent-2: #0f3d4c;
+  --sheet-title-font: Georgia, "Times New Roman", serif;
+  --sheet-body-font: Georgia, "Times New Roman", serif;
+}
+
+.sheet-theme-pirate::before {
+  background:
+    radial-gradient(circle at 15% 20%, rgb(15 61 76 / 0.12), transparent 12rem),
+    radial-gradient(circle at 90% 70%, rgb(124 45 18 / 0.14), transparent 12rem),
+    linear-gradient(135deg, #fae8bd, #e8c98c);
+}
+
+.sheet-theme-pirate::after {
+  border: 4px double #3a2416;
+  box-shadow:
+    inset 0 0 0 7px rgb(15 61 76 / 0.12),
+    inset 0 0 0 15px rgb(124 45 18 / 0.08);
+}
+
+.sheet-theme-pirate .sheet-section-title::before {
+  content: "☸ ";
+  color: var(--sheet-accent-2);
+}
+
+.sheet-theme-pirate .sheet-title-block h2 {
+  color: #3a2416;
+}
+
+/* ---------------------------------------------------------
+   Ink saver mode
+   --------------------------------------------------------- */
+
+.character-sheet.sheet-ink-saver {
+  --sheet-bg: #ffffff;
+  --sheet-panel: #ffffff;
+  --sheet-panel-soft: #ffffff;
+  --sheet-frame-opacity: 0.9;
+}
+
+.character-sheet.sheet-ink-saver::before {
+  background: #ffffff !important;
+}
+
+.character-sheet.sheet-ink-saver::after {
+  box-shadow: none !important;
+}
+
+.character-sheet.sheet-ink-saver .sheet-table th,
+.character-sheet.sheet-ink-saver .sheet-stat-grid article,
+.character-sheet.sheet-ink-saver .sheet-points,
+.character-sheet.sheet-ink-saver .sheet-notes {
+  background: #ffffff !important;
+}
+
+/* ---------------------------------------------------------
+   Print
+   --------------------------------------------------------- */
+
+@media print {
+  .sheet-toolbar {
+    display: none !important;
+  }
+
+  .character-sheet {
+    box-shadow: none !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  .character-sheet.sheet-paper-a4 {
+    width: 100%;
+  }
+
+  .character-sheet.sheet-paper-letter {
+    width: 100%;
+  }
+
+  .character-sheet::after {
+    inset: 0;
+  }
+}
