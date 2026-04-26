@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 210 297"
+  preserveAspectRatio="none"
+>
+  <defs>
+    <style>
+      .main {
+        fill: none;
+        stroke: #1e3a5f;
+        stroke-width: 1.25;
+        stroke-linecap: square;
+        stroke-linejoin: miter;
+      }
+
+      .thin {
+        fill: none;
+        stroke: #075985;
+        stroke-width: 0.55;
+        stroke-linecap: square;
+        stroke-linejoin: miter;
+        opacity: 0.9;
+      }
+
+      .teal {
+        fill: none;
+        stroke: #0f766e;
+        stroke-width: 0.7;
+        stroke-linecap: square;
+        stroke-linejoin: miter;
+      }
+
+      .panel {
+        fill: #dbeafe;
+        opacity: 0.28;
+        stroke: #1e3a5f;
+        stroke-width: 0.35;
+      }
+
+      .soft {
+        fill: #0f766e;
+        opacity: 0.12;
+      }
+
+      .dot {
+        fill: #075985;
+        opacity: 0.75;
+      }
+
+      .muted {
+        fill: none;
+        stroke: #7a94ad;
+        stroke-width: 0.35;
+        opacity: 0.65;
+      }
+    </style>
+
+    <pattern
+      id="hex-grid"
+      width="12"
+      height="10.392"
+      patternUnits="userSpaceOnUse"
+    >
+      <path
+        class="muted"
+        d="M3 0 L9 0 L12 5.196 L9 10.392 L3 10.392 L0 5.196 Z"
+      />
+    </pattern>
+
+    <g id="tech-corner">
+      <path
+        class="main"
+        d="M0 20 L20 0 H48"
+      />
+      <path
+        class="main"
+        d="M0 20 V48"
+      />
+
+      <path
+        class="thin"
+        d="M8 23 L23 8 H42"
+      />
+      <path
+        class="thin"
+        d="M8 23 V42"
+      />
+
+      <path
+        class="teal"
+        d="M14 30 H30 V14"
+      />
+
+      <rect x="27" y="7" width="13" height="5" class="panel" />
+      <rect x="7" y="27" width="5" height="13" class="panel" />
+
+      <circle cx="18" cy="18" r="1.4" class="dot" />
+      <circle cx="34" cy="9.5" r="0.9" class="dot" />
+      <circle cx="9.5" cy="34" r="0.9" class="dot" />
+
+      <path class="thin" d="M34 17 H45 M17 34 V45" />
+    </g>
+
+    <g id="status-strip">
+      <rect x="0" y="0" width="9" height="2" class="dot" />
+      <rect x="13" y="0" width="18" height="2" class="soft" />
+      <rect x="35" y="0" width="5" height="2" class="dot" />
+      <rect x="44" y="0" width="24" height="2" class="soft" />
+      <rect x="72" y="0" width="8" height="2" class="dot" />
+      <rect x="84" y="0" width="16" height="2" class="soft" />
+    </g>
+
+    <g id="side-nodes">
+      <circle cx="0" cy="0" r="1.2" class="dot" />
+      <circle cx="0" cy="18" r="1.2" class="dot" />
+      <circle cx="0" cy="36" r="1.2" class="dot" />
+      <path class="thin" d="M0 0 V36" />
+      <path class="thin" d="M0 9 H9 M0 27 H9" />
+    </g>
+  </defs>
+
+  <!-- subtle scalable hex field -->
+  <rect x="0" y="0" width="210" height="297" fill="url(#hex-grid)" opacity="0.22" />
+
+  <!-- outer angular frame -->
+  <path
+    class="main"
+    d="M5 24
+       L24 5
+       H75
+       L82 12
+       H128
+       L135 5
+       H186
+       L205 24
+       V273
+       L186 292
+       H135
+       L128 285
+       H82
+       L75 292
+       H24
+       L5 273
+       Z"
+  />
+
+  <!-- inner angular frame -->
+  <path
+    class="thin"
+    d="M12 29
+       L29 12
+       H181
+       L198 29
+       V268
+       L181 285
+       H29
+       L12 268
+       Z"
+  />
+
+  <!-- secondary geometric line -->
+  <path
+    class="teal"
+    d="M18 35
+       L35 18
+       H65
+       L72 25
+       H138
+       L145 18
+       H175
+       L192 35
+       V262
+       L175 279
+       H145
+       L138 272
+       H72
+       L65 279
+       H35
+       L18 262
+       Z"
+    opacity="0.7"
+  />
+
+  <!-- corners -->
+  <use href="#tech-corner" x="7" y="7" />
+  <use href="#tech-corner" x="203" y="7" transform="scale(-1 1)" />
+  <use href="#tech-corner" x="7" y="290" transform="scale(1 -1)" />
+  <use href="#tech-corner" x="203" y="290" transform="scale(-1 -1)" />
+
+  <!-- top and bottom header modules -->
+  <rect x="78" y="7" width="54" height="10" class="panel" />
+  <path class="thin" d="M83 12 H127" />
+  <circle cx="88" cy="12" r="1.2" class="dot" />
+  <circle cx="122" cy="12" r="1.2" class="dot" />
+
+  <rect x="78" y="280" width="54" height="10" class="panel" />
+  <path class="thin" d="M83 285 H127" />
+  <circle cx="88" cy="285" r="1.2" class="dot" />
+  <circle cx="122" cy="285" r="1.2" class="dot" />
+
+  <!-- status strips -->
+  <g opacity="0.85">
+    <use href="#status-strip" x="55" y="20" />
+    <use href="#status-strip" x="55" y="275" />
+  </g>
+
+  <!-- side nodes -->
+  <g opacity="0.8">
+    <use href="#side-nodes" x="16" y="110" />
+    <use href="#side-nodes" x="194" y="110" transform="scale(-1 1)" />
+    <use href="#side-nodes" x="16" y="170" />
+    <use href="#side-nodes" x="194" y="170" transform="scale(-1 1)" />
+  </g>
+
+  <!-- small blueprint cut marks -->
+  <g opacity="0.75">
+    <path class="thin" d="M44 12 V20 H52" />
+    <path class="thin" d="M166 12 V20 H158" />
+    <path class="thin" d="M44 285 V277 H52" />
+    <path class="thin" d="M166 285 V277 H158" />
+
+    <path class="thin" d="M12 64 H22 V54" />
+    <path class="thin" d="M198 64 H188 V54" />
+    <path class="thin" d="M12 233 H22 V243" />
+    <path class="thin" d="M198 233 H188 V243" />
+  </g>
+
+  <!-- central top circuit ornament -->
+  <g opacity="0.75">
+    <path class="teal" d="M96 21 V28 H105 V34" />
+    <path class="teal" d="M114 21 V28 H105" />
+    <circle cx="96" cy="21" r="1.1" class="dot" />
+    <circle cx="114" cy="21" r="1.1" class="dot" />
+    <circle cx="105" cy="34" r="1.1" class="dot" />
+  </g>
+
+  <!-- bottom circuit ornament -->
+  <g opacity="0.75">
+    <path class="teal" d="M96 276 V269 H105 V263" />
+    <path class="teal" d="M114 276 V269 H105" />
+    <circle cx="96" cy="276" r="1.1" class="dot" />
+    <circle cx="114" cy="276" r="1.1" class="dot" />
+    <circle cx="105" cy="263" r="1.1" class="dot" />
+  </g>
+</svg>
