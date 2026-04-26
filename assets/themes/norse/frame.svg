@@ -1,1 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 210 297"
+  preserveAspectRatio="none"
+>
+  <defs>
+    <style>
+      .outer {
+        fill: none;
+        stroke: #3a2416;
+        stroke-width: 1.9;
+        stroke-linejoin: round;
+      }
 
+      .inner {
+        fill: none;
+        stroke: #6b3f22;
+        stroke-width: 0.8;
+        stroke-linejoin: round;
+      }
+
+      .accent {
+        fill: none;
+        stroke: #9a5b25;
+        stroke-width: 0.75;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .rune {
+        fill: none;
+        stroke: #5b1f13;
+        stroke-width: 0.65;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .corner-fill {
+        fill: #5b1f13;
+        opacity: 0.13;
+      }
+
+      .knot-fill {
+        fill: #9a5b25;
+        opacity: 0.12;
+      }
+    </style>
+
+    <!-- Reusable corner knot -->
+    <g id="corner-knot">
+      <path
+        class="corner-fill"
+        d="M0 0 H32 C28 8 28 14 32 22 C21 18 14 20 8 29 C9 18 6 10 0 0 Z"
+      />
+
+      <path
+        class="outer"
+        d="M5 5 H33 M5 5 V33"
+      />
+
+      <path
+        class="accent"
+        d="M10 9
+           C17 9 17 18 10 18
+           C18 18 18 27 10 27
+           M18 9
+           C25 9 25 18 18 18
+           C26 18 26 27 18 27"
+      />
+
+      <path
+        class="accent"
+        d="M9 10
+           C9 17 18 17 18 10
+           C18 18 27 18 27 10
+           M9 18
+           C9 25 18 25 18 18
+           C18 26 27 26 27 18"
+      />
+
+      <!-- Small dragon-head-like terminal -->
+      <path
+        class="outer"
+        d="M34 6
+           C39 7 42 10 43 14
+           C39 13 36 14 33 17
+           C34 13 34 10 34 6 Z"
+      />
+      <circle cx="38.5" cy="11" r="0.8" fill="#3a2416" />
+
+      <path
+        class="outer"
+        d="M6 34
+           C7 39 10 42 14 43
+           C13 39 14 36 17 33
+           C13 34 10 34 6 34 Z"
+      />
+      <circle cx="11" cy="38.5" r="0.8" fill="#3a2416" />
+    </g>
+
+    <!-- Reusable rune group -->
+    <g id="runes-horizontal">
+      <path class="rune" d="M0 0 V7 M0 3.5 L4 0 M0 3.5 L4 7" />
+      <path class="rune" d="M10 0 V7 M10 0 L14 3.5 M10 7 L14 3.5" />
+      <path class="rune" d="M22 0 V7 M22 0 L26 7 M26 0 V7" />
+      <path class="rune" d="M34 0 V7 M34 3.5 H39" />
+      <path class="rune" d="M47 0 L51 3.5 L47 7 M51 3.5 H55" />
+    </g>
+  </defs>
+
+  <!-- Soft parchment-safe transparent frame zone -->
+  <rect x="4" y="4" width="202" height="289" rx="3" class="knot-fill" />
+
+  <!-- Main page frame -->
+  <rect x="5" y="5" width="200" height="287" rx="2.5" class="outer" />
+  <rect x="10" y="10" width="190" height="277" rx="2" class="inner" />
+  <rect x="14" y="14" width="182" height="269" rx="1.5" class="accent" />
+
+  <!-- Corner knots -->
+  <use href="#corner-knot" x="7" y="7" />
+  <use href="#corner-knot" x="203" y="7" transform="scale(-1 1)" />
+  <use href="#corner-knot" x="7" y="290" transform="scale(1 -1)" />
+  <use href="#corner-knot" x="203" y="290" transform="scale(-1 -1)" />
+
+  <!-- Top and bottom woven border -->
+  <path
+    class="accent"
+    d="M48 9
+       C55 16 62 2 69 9
+       C76 16 83 2 90 9
+       C97 16 104 2 111 9
+       C118 16 125 2 132 9
+       C139 16 146 2 153 9
+       C160 16 167 2 174 9"
+  />
+
+  <path
+    class="accent"
+    d="M48 288
+       C55 281 62 295 69 288
+       C76 281 83 295 90 288
+       C97 281 104 295 111 288
+       C118 281 125 295 132 288
+       C139 281 146 295 153 288
+       C160 281 167 295 174 288"
+  />
+
+  <!-- Side woven border -->
+  <path
+    class="accent"
+    d="M9 48
+       C16 55 2 62 9 69
+       C16 76 2 83 9 90
+       C16 97 2 104 9 111
+       C16 118 2 125 9 132
+       C16 139 2 146 9 153
+       C16 160 2 167 9 174
+       C16 181 2 188 9 195
+       C16 202 2 209 9 216
+       C16 223 2 230 9 237
+       C16 244 2 251 9 258"
+  />
+
+  <path
+    class="accent"
+    d="M201 48
+       C194 55 208 62 201 69
+       C194 76 208 83 201 90
+       C194 97 208 104 201 111
+       C194 118 208 125 201 132
+       C194 139 208 146 201 153
+       C194 160 208 167 201 174
+       C194 181 208 188 201 195
+       C194 202 208 209 201 216
+       C194 223 208 230 201 237
+       C194 244 208 251 201 258"
+  />
+
+  <!-- Rune bands -->
+  <g opacity="0.72">
+    <use href="#runes-horizontal" x="77" y="18" />
+    <use href="#runes-horizontal" x="77" y="272" />
+  </g>
+
+  <!-- Side runes, rotated -->
+  <g opacity="0.55">
+    <g transform="translate(19 118) rotate(90)">
+      <use href="#runes-horizontal" x="0" y="0" />
+    </g>
+    <g transform="translate(191 178) rotate(-90)">
+      <use href="#runes-horizontal" x="0" y="0" />
+    </g>
+  </g>
+
+  <!-- Subtle title medallion top -->
+  <path
+    class="outer"
+    d="M89 13
+       C94 8 116 8 121 13
+       C116 18 94 18 89 13 Z"
+  />
+  <path
+    class="rune"
+    d="M101 10 V16 M101 13 L105 10 M101 13 L105 16
+       M111 10 V16 M111 10 L115 13 M111 16 L115 13"
+  />
+
+  <!-- Bottom medallion -->
+  <path
+    class="outer"
+    d="M89 284
+       C94 279 116 279 121 284
+       C116 289 94 289 89 284 Z"
+  />
+  <path
+    class="rune"
+    d="M103 281 V287 M103 281 L107 287 M107 281 V287
+       M113 281 L117 284 L113 287"
+  />
+</svg>
