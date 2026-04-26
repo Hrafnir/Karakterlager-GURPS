@@ -1,0 +1,67 @@
+[
+  {
+    "name": "Arm Lock",
+    "baseSkill": "Judo or Wrestling",
+    "stat": "DX",
+    "difficulty": "Technique",
+    "points": 1,
+    "manualLevel": "",
+    "default": "",
+    "page": "",
+    "notes": "Grappling technique. Fill exact default and maximum from your book.",
+    "source": "User library",
+    "tags": ["combat", "grappling", "melee"]
+  },
+  {
+    "name": "Disarming",
+    "baseSkill": "Relevant weapon skill",
+    "stat": "DX",
+    "difficulty": "Technique",
+    "points": 1,
+    "manualLevel": "",
+    "default": "",
+    "page": "",
+    "notes": "Technique for removing an opponent's weapon. Define base skill and default.",
+    "source": "User library",
+    "tags": ["combat", "weapon"]
+  },
+  {
+    "name": "Feint",
+    "baseSkill": "Relevant combat skill",
+    "stat": "DX",
+    "difficulty": "Technique",
+    "points": 1,
+    "manualLevel": "",
+    "default": "",
+    "page": "",
+    "notes": "Combat deception technique. Fill exact rules reference from your book.",
+    "source": "User library",
+    "tags": ["combat", "melee"]
+  },
+  {
+    "name": "Kicking",
+    "baseSkill": "Brawling or Karate",
+    "stat": "DX",
+    "difficulty": "Technique",
+    "points": 1,
+    "manualLevel": "",
+    "default": "",
+    "page": "",
+    "notes": "Unarmed striking technique. Define exact default and maximum.",
+    "source": "User library",
+    "tags": ["combat", "unarmed"]
+  },
+  {
+    "name": "Targeted Attack",
+    "baseSkill": "Relevant combat skill",
+    "stat": "DX",
+    "difficulty": "Technique",
+    "points": 1,
+    "manualLevel": "",
+    "default": "",
+    "page": "",
+    "notes": "Specialized attack against a defined hit location. Specify weapon and target.",
+    "source": "User library",
+    "tags": ["combat", "hit-location"]
+  }
+]
