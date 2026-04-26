@@ -1,0 +1,67 @@
+[
+  {
+    "name": "Always checks exits",
+    "type": "Quirk",
+    "levels": 1,
+    "baseCost": -1,
+    "modifierPct": 0,
+    "points": -1,
+    "autoCost": false,
+    "page": "",
+    "notes": "The character instinctively notes exits, windows and escape routes.",
+    "source": "User library",
+    "tags": ["roleplay", "cautious"]
+  },
+  {
+    "name": "Collects small trophies",
+    "type": "Quirk",
+    "levels": 1,
+    "baseCost": -1,
+    "modifierPct": 0,
+    "points": -1,
+    "autoCost": false,
+    "page": "",
+    "notes": "Keeps minor souvenirs from places, enemies or important scenes.",
+    "source": "User library",
+    "tags": ["roleplay", "habit"]
+  },
+  {
+    "name": "Dislikes wasting food",
+    "type": "Quirk",
+    "levels": 1,
+    "baseCost": -1,
+    "modifierPct": 0,
+    "points": -1,
+    "autoCost": false,
+    "page": "",
+    "notes": "Will react negatively to needless waste of food or provisions.",
+    "source": "User library",
+    "tags": ["roleplay", "value"]
+  },
+  {
+    "name": "Keeps weapons obsessively clean",
+    "type": "Quirk",
+    "levels": 1,
+    "baseCost": -1,
+    "modifierPct": 0,
+    "points": -1,
+    "autoCost": false,
+    "page": "",
+    "notes": "Maintains arms and tools whenever there is downtime.",
+    "source": "User library",
+    "tags": ["roleplay", "combat", "habit"]
+  },
+  {
+    "name": "Suspicious of nobility",
+    "type": "Quirk",
+    "levels": 1,
+    "baseCost": -1,
+    "modifierPct": 0,
+    "points": -1,
+    "autoCost": false,
+    "page": "",
+    "notes": "Distrusts aristocrats, officials or social elites.",
+    "source": "User library",
+    "tags": ["roleplay", "social"]
+  }
+]
