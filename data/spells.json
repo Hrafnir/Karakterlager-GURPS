@@ -1,0 +1,67 @@
+[
+  {
+    "name": "Ignite Fire",
+    "college": "Fire",
+    "stat": "IQ",
+    "difficulty": "Hard",
+    "points": 1,
+    "manualLevel": "",
+    "prereq": "",
+    "page": "",
+    "notes": "Basic fire spell. Fill prerequisites, casting cost and rules text from your book.",
+    "source": "User library",
+    "tags": ["magic", "fire"]
+  },
+  {
+    "name": "Create Fire",
+    "college": "Fire",
+    "stat": "IQ",
+    "difficulty": "Hard",
+    "points": 1,
+    "manualLevel": "",
+    "prereq": "",
+    "page": "",
+    "notes": "Creates fire. Add exact prerequisites and cost from your book.",
+    "source": "User library",
+    "tags": ["magic", "fire"]
+  },
+  {
+    "name": "Light",
+    "college": "Light and Darkness",
+    "stat": "IQ",
+    "difficulty": "Hard",
+    "points": 1,
+    "manualLevel": "",
+    "prereq": "",
+    "page": "",
+    "notes": "Produces light. Add exact casting details from your book.",
+    "source": "User library",
+    "tags": ["magic", "light"]
+  },
+  {
+    "name": "Minor Healing",
+    "college": "Healing",
+    "stat": "IQ",
+    "difficulty": "Hard",
+    "points": 1,
+    "manualLevel": "",
+    "prereq": "",
+    "page": "",
+    "notes": "Basic healing spell. Fill prerequisites and healing limits from your book.",
+    "source": "User library",
+    "tags": ["magic", "healing"]
+  },
+  {
+    "name": "Detect Magic",
+    "college": "Knowledge",
+    "stat": "IQ",
+    "difficulty": "Hard",
+    "points": 1,
+    "manualLevel": "",
+    "prereq": "",
+    "page": "",
+    "notes": "Detects magical presence. Add exact spell details from your book.",
+    "source": "User library",
+    "tags": ["magic", "knowledge"]
+  }
+]
